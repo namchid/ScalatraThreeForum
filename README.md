@@ -3,7 +3,7 @@
 ## Build & Run ##
 
 ```sh
-$ cd ThreeForum
+$ cd ScalatraThreeForum
 $ ./sbt
 > container:start
 > browse
