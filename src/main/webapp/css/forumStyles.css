@@ -1,0 +1,40 @@
+#boards {
+    /*color: white;*/
+    padding-top: 10px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.categoryHeading {
+    padding-top: 10px;
+    /*text-align: center;*/
+    font-size: 20px;
+    padding-left: 10px;
+    text-transform: uppercase;
+}
+
+.category {
+    background-color: #54a884;
+    margin: 10px 10px 10px 10px;
+    padding: 5px
+}
+
+.category:hover {
+    background-color: blueviolet;
+    cursor: pointer;
+}
+
+.pic {
+    float: left;
+    padding-right: 10px;
+}
+
+.title {
+    font-size: 25px;
+    text-transform: lowercase;
+}
+
+.category a {
+    color: white;
+    text-decoration: none;
+}
