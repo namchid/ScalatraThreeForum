@@ -1,0 +1,22 @@
+#new-post-label {
+	border-top: 2px solid #222;
+	margin: 5px auto;
+}
+
+
+#post-form-area {
+	width: 90%;
+	margin: 0 50px 50px 50px;
+}
+
+/**
+#new-post {
+	width: 100%;
+	font-family: 'Cutive Mono', sans-serif;
+	padding: 5px;
+	font-size: 18px;
+	background-color: black;
+	color: green;
+	font-weight: bold;	
+}
+*/

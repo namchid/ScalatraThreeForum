@@ -1,0 +1,110 @@
+* {
+	margin: 0; 
+	padding: 0;
+}
+
+canvas {
+	display: block;
+	z-index : 30;
+}
+
+#user-form {
+	display: block;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.0);
+	position: absolute;
+	z-index: 1000;
+	//border: 1px solid green;
+	margin: auto;
+	text-align: center;
+}
+
+fieldset {
+	border: 0;
+	width: 100%;
+/**	//margin-left: 25%;
+	//margin-top: 20%; */
+}
+
+#forum-title {
+        width: 99%;
+	color: #4BD154;
+	font-family: 'Monoton', sans-serif;
+        font-size: 50px;
+        //margin-bottom: 3%;
+        text-align: center;
+	background-color: rgba(0, 0, 0, .65);
+	padding: 5px 0;
+}
+
+.input-fields {
+	width: 99%;
+        font-size: 20px;
+        margin-bottom: 3%;
+        text-align: center;
+	border-radius: 100px;
+	border: 1px solid white;
+	background-color: black; //todo: change color
+}
+
+input[type="text"] {
+	color: white;
+	font-family: 'Cutive Mono', sans-serif;
+}
+
+input[type="password"] {
+	font-family: 'Cutive Mono', sans-serif;
+	color: white;
+}
+
+#submit-button {
+	padding: 5px 0;
+	width: 100%;
+	font-size: 20px;
+	border-radius: 100px;
+	border: 0;
+	font-family: 'Cutive Mono', sans-serif;
+	background-color: #D14343;
+}
+
+#submit-button:hover {
+	cursor: pointer;
+}
+
+#form-selector {
+	width: 30%;
+	position: absolute;
+	background-color: blue;
+	list-style-type: none;
+}
+
+#new-user {
+	background-color: #B0CFBF;
+	width: 100%;
+	padding: 10px 0;
+        font-size: 15px;
+        text-transform: uppercase;
+        border: 0;
+	color: white;
+	font-family: 'Cutive Mono', sans-serif;
+}
+
+#new-user:hover {
+	cursor: pointer;
+}
+
+#login {
+	background-color: #B0CFBF;
+	color: white;
+	width: 100%;
+	padding: 10px 0;
+        font-size: 15px;
+        text-transform: uppercase;
+        border: 0;
+	font-family: 'Cutive Mono', sans-serif;
+}
+
+#login:hover {
+	cursor: pointer;
+} 
+

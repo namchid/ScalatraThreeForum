@@ -35,7 +35,7 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
   get("/test") {
     <html>
       <head>
-        <link rel="stylesheet" type="text/css" href="css/navStyles.css"/>
+        <link rel="stylesheet" type="text/css" href="css/forum-styles.css"/>
       </head>
       <body>
 				<h1>At least we know CSS works.</h1>

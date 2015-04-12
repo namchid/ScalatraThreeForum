@@ -1,0 +1,39 @@
+/** todo: consider consolidating new-topic-title and new-topic-post */
+
+#new-topic-title {
+	width: 70%;
+	font-family: 'Cutive Mono', sans-serif;
+	padding: 5px;
+	overflow: hidden;
+	font-size: 18px;
+	margin: auto auto 15px auto;
+	border-radius: 10px;
+	background-color: black;
+	color: green;
+	font-weight: bold;
+}
+
+#new-topic-post {
+	width: 70%;
+	font-family: 'Cutive Mono', sans-serif;
+	padding: 5px;
+	font-size: 18px;
+	margin: auto auto 15px auto;
+	border-radius: 10px;
+	background-color: black;
+	color: green;
+	font-weight: bold;
+}
+
+.submit-post-button {
+	width: 71%;
+	font-size: 20px;
+	font-family: 'Cutive Mono', sans-serif;
+	font-weight: bold;
+	background-color: #BA2738;
+	color: white;
+	border-radius: 10px;
+	padding: 15px;
+	border: 1px inset white;
+	margin-top: 10px;
+}
