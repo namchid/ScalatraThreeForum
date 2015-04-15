@@ -6,7 +6,7 @@ import scalate.ScalateSupport
 
 object ProfilePage {
 
-  def setContents(content: Seq[Node]) = {
+  def set(content: Seq[Node]) = {
     <html lang="en">
       <head>
         <meta charset="utf-8"/>
@@ -17,7 +17,7 @@ object ProfilePage {
         <link rel="stylesheet" tpye="text/css" href="css/forum-styles.css"/>
         <link rel="stylesheet" type="text/css" href="css/about-styles.css"/>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-        <script type="text/javascript" src="js/setUpNavigation-about.js"></script>
+       <!-- <script type="text/javascript" src="js/setUpNavigation-about.js"></script> -->
         <script type="text/javascript" src="js/inner-matrix.js"></script>
         <title>Forum</title>
       </head>

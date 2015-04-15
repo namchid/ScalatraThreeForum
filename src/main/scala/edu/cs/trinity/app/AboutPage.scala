@@ -6,7 +6,7 @@ import scalate.ScalateSupport
 
 object AboutPage {
 
-  def setContents(content: Seq[Node]) = {
+  def get() = {
     <html lang="en">
       <head>
         <meta charset="utf-8"/>
@@ -17,7 +17,7 @@ object AboutPage {
         <link rel="stylesheet" tpye="text/css" href="css/forum-styles.css"/>
         <link rel="stylesheet" type="text/css" href="css/about-styles.css"/>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-        <script type="text/javascript" src="js/setUpNavigation-about.js"></script>
+       <!--<script type="text/javascript" src="js/setUpNavigation-about.js"></script> -->
         <script type="text/javascript" src="js/inner-matrix.js"></script>
         <title>Forum</title>
       </head>
@@ -28,7 +28,7 @@ object AboutPage {
           <div id="about-us-area">
             <div id="brittney">
               <div class="picture">
-                <img src="resources/images/doge.png"/>
+                <img src="images/doge.png"/>
               </div>
               <div class="about-worker-ant">
                 <h5>Brittney</h5>
@@ -40,7 +40,7 @@ object AboutPage {
             </div>
             <div id="hayden">
               <div class="picture">
-                <img src="resources/images/philosoraptor.png"/>
+                <img src="images/philosoraptor.png"/>
               </div>
               <div class="about-worker-ant">
                 <h5>Hayden</h5>
@@ -53,7 +53,7 @@ object AboutPage {
             <div id="namchi">
               <div id="inner-namchi">
                 <div class="picture">
-                  <img src="resources/images/Grumpy_Cat.png"/>
+                  <img src="images/Grumpy_Cat.png"/>
                 </div>
                 <div class="about-worker-ant">
                   <h5>Namchi</h5>
@@ -81,5 +81,4 @@ object AboutPage {
       </body>
     </html>
   }
-
 }
