@@ -1,4 +1,4 @@
-# ThreeForum #
+# ScalatraThreeForum #
 
 ## Build & Run ##
 
