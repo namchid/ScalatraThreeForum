@@ -44,8 +44,16 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
     AboutPage.get()
   }
 
+  get("/profile") {
+    session("username") = "hermajesty"
+    val username = session("username")
+    val content = <h1>Test</h1>
+    ProfilePage.set(db, username, content)
+  }
+
   get("/session") {
     if (session.get("name").isEmpty) {
+      session("name") = "Bob"
       <p>I don't know you. Let's call you Bob.</p>
     } else {
       val name = session("name")

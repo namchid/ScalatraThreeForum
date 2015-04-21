@@ -129,7 +129,7 @@
   right: 0;
 }
 #cssmenu .has-sub ul li {
-  *margin-bottom: -1px;
+  margin-bottom: -1px;
 }
 #cssmenu .has-sub ul li a {
   background: #266134;
