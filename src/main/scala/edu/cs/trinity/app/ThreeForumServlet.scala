@@ -45,9 +45,17 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
   }
 
   get("/profile") {
+    //future todo: "/posts" should be whatever link hayden has. posts.php --> /posts?
+    //future todo: actually get the real session("username")
     session("username") = "hermajesty"
     val username = session("username")
-    val content = <h1>Test</h1>
+    val content = {
+      <form id="jumpToTopic" action={ url("/posts") } method="post">
+        <input id="topic_id" type="hidden" style="display:none" value="x" name="topic_id"></input>
+        <input id="page" type="hidden" style="display:none" value="1" name="page"></input>
+      </form>
+    }
+    
     ProfilePage.set(db, username, content)
   }
 

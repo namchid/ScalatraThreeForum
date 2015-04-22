@@ -36,7 +36,6 @@ object ProfilePage {
 
         val map = topicsMap.toMap
         postHistory = topicHistoryIds.map(x =>
-          //          <li>{ name } posted in <a href="#" class="jump_to_topic" title={ x }>  { { map.get(x) } } </a> </li>).asInstanceOf[Seq[Node]]
           <div class="history">{ name } posted in <a class="jump_to_topic" title={ x.toString() } href="#">{ map(x); }</a></div>).asInstanceOf[Seq[Node]]
 
     }
@@ -60,6 +59,7 @@ object ProfilePage {
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
         <script type="text/javascript" src="js/inner-matrix.js"></script>
         <script type="text/javascript" src="js/profile.js"></script>
+        <script type="text/javascript" src="js/jumpToTopic.js"></script>
       </head>
       <body>
         <div id="navBar">
@@ -95,6 +95,10 @@ object ProfilePage {
               </div>
               <div id="post-history">
                 <h4>Recent Posts</h4>
+
+
+{content}
+
                 { databaseResults._4 }
               </div>
             </div>
