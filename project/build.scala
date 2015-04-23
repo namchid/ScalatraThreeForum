@@ -6,6 +6,7 @@ import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
 import com.earldouglas.xsbtwebplugin.PluginKeys._
 import com.earldouglas.xsbtwebplugin.WebPlugin._
+import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 
 
 object ThreeforumBuild extends Build {
@@ -30,8 +31,8 @@ object ThreeforumBuild extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container",
-        "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container",
+        "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "compile;container",
+        "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "compile;container",
         "javax.servlet" % "javax.servlet-api" % "3.1.0",
         "com.typesafe.slick" %% "slick" % "2.1.0",
         "mysql" % "mysql-connector-java" % "5.1.12"
@@ -49,5 +50,5 @@ object ThreeforumBuild extends Build {
         )
       }
     )
-  )
+  ).enablePlugins(JavaAppPackaging)
 }
