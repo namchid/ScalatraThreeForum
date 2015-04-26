@@ -27,19 +27,59 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
 
   implicit val getUser2 = GetResult(r => User2(r.<<, r.<<, r.<<, r.<<, r.<<, r.<<))
 
+  get("/newUser") {
+    println("new user page")
+  }
+
   get("/") {
-    <html>
-      <body>
-        <h1>Hello, world!</h1>
-        Say<a href="hello-scalate">hello to Scalate</a>
-        .
-        <h2>ThreeForum</h2>
-      </body>
-    </html>
+
+    var contents = {
+      <form name="loginform" method="post" action={ url("/forum") }>
+        <input type="text" id="username" name="username" placeholder="username" class="input-fields"/>
+        <input type="password" id="password" name="password" placeholder="password" class="input-fields"/>
+        <button id="submit-button">login</button>
+        <input type="hidden" id="hiddenfield" name="hiddenfield"/>
+      </form>
+    }
+
+    val formSelectorContents = {
+      <ul id="form-selector">
+        <li>
+          <form action={url("/")}>
+            <button  type="submit" id="login" >Log in</button>
+          </form>
+        </li>
+        <li>
+          <form action={url("/newUser")}>
+            <button type="submit" id="new-user" >New User</button>
+          </form>
+        </li>
+      </ul>
+    }
+    Login.set(contents, formSelectorContents);
+
   }
 
   get("/about") {
     AboutPage.get()
+  }
+
+  post("/forum") {
+
+    session("username") = params("username")
+    session("password") = params("password")
+    var userID = ForumPage.checkUser(session("username").toString(), session("password").toString(), db)
+    if (userID <= 0)
+      redirect("/")
+    else {
+      session("userid") = userID
+      ForumPage.set(userID)
+    }
+
+  }
+
+  get("/login") {
+
   }
 
   get("/profile") {
