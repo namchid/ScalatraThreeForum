@@ -8,7 +8,6 @@ import com.earldouglas.xsbtwebplugin.PluginKeys._
 import com.earldouglas.xsbtwebplugin.WebPlugin._
 import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 
-
 object ThreeforumBuild extends Build {
   val Organization = "edu.cs.trinity"
   val Name = "ThreeForum"

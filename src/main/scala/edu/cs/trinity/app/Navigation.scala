@@ -6,19 +6,56 @@ import scalate.ScalateSupport
 
 object Navigation {
 
-  val profileNavigation: Seq[Node] = {
+  val aboutNavigation = {
+    <header>ThreeForum</header>
+    <div id='cssmenu'>
+      <ul>
+        <li class='has-sub'>
+          <a href='/profile'><span>My Profile</span></a>
+          <ul>
+            <li><a href='/logout'>Logout</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href='#todo_forums'><span>Forum</span></a>
+        </li>
+        <li class='active last'><a href='/about'><span class='current'>About ThreeForum</span></a></li>
+      </ul>
+    </div>
+  }
+
+  val forumNavigation = {
+    <header>ThreeForum</header>
+    <div id='cssmenu'>
+      <ul>
+        <li class='has-sub'>
+          <a href='/profile'><span>My Profile</span></a>
+          <ul>
+            <li><a href='/logout'>Logout</a></li>
+          </ul>
+        </li>
+        <li class='active'>
+          <a href='#todo_forums'><span>Forum</span></a>
+        </li>
+        <li class='last'><a href='/about'><span class='current'>About ThreeForum</span></a></li>
+      </ul>
+    </div>
+  }
+
+  val profileNavigation = {
     <header>ThreeForum</header>
     <div id="cssmenu">
       <ul>
         <li class='active has-sub'>
-          <a href='#todo'><span class='current'>My Profile</span></a>
+          <a href='/profile'><span class='current'>My Profile</span></a>
           <ul>
-            <li><a href='#todo'>Logout</a></li>
+            <li><a href='/logout'>Logout</a></li>
           </ul>
         </li>
-        <li><a href='#todo'><span>Forum</span></a> </li>
-        <li class='last'><a href='#todo'><span>About ThreeForum</span></a></li>
+        <li><a href='#todo_forums'><span>Forum</span></a> </li>
+        <li class='last'><a href='/about'><span>About ThreeForum</span></a></li>
       </ul>
     </div>
   }
+
 }

@@ -17,12 +17,12 @@ object AboutPage {
         <link rel="stylesheet" tpye="text/css" href="css/forum-styles.css"/>
         <link rel="stylesheet" type="text/css" href="css/about-styles.css"/>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-       <!--<script type="text/javascript" src="js/setUpNavigation-about.js"></script> -->
+        <!--<script type="text/javascript" src="js/setUpNavigation-about.js"></script> -->
         <script type="text/javascript" src="js/inner-matrix.js"></script>
         <title>Forum</title>
       </head>
       <body>
-        <div id="navBar"></div>
+        <div id="navBar">{ Navigation.aboutNavigation }</div>
         <div id="mainContainer">
           <div class="subtitle">About Us</div>
           <div id="about-us-area">
