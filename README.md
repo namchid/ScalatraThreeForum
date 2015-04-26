@@ -13,3 +13,5 @@ If `browse` doesn't launch your browser, manually open [http://localhost:8086/](
 
 
 Deployed to Heroku at https://morning-bayou-5337.herokuapp.com/, but database not yet working. Todo: Configurations with Heroku Addons for database.
+
+This works for Brittney.
