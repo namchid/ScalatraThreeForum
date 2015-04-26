@@ -12,39 +12,41 @@ import Tables._
 
 object ProfilePage {
 
-  def databaseQueries(db: Database, username: Any) = {
-    val name = username
-    val recentLimit = 10
-    val userId = 1
-
+  def databaseQueries(db: Database, userId: Int) = {
+    var username = ""
     var userEmail = ""
-    var userPostCount = -1
+    var userPostCount = 0
     var lastPostDate = ""
-    var postHistory: Seq[Node] = Nil
+    var lastTenPosts: Seq[Node] = Nil
 
     db.withSession {
       implicit session =>
-        val emailRes = users.filter(x => x.userid === { userId }).list
-        val postsRes = posts.filter(x => x.userId === { userId }).list
-        val lastPost = postsRes.last
+        val filteredUsers = (users.filter(x => x.userid === userId).list)
+        val correctUser = filteredUsers(0)
+        val postsHistory = posts.filter(x => x.userId === userId).list
 
-        lastPostDate = lastPost._3.toString().split(" ")(0)
-        userEmail = emailRes(0)._4
-        userPostCount = postsRes.size
+        username = correctUser._2
+        userEmail = correctUser._4
+        userPostCount = postsHistory.size
 
-        val topicHistoryIds = postsRes.takeRight(10).map(x => x._4).toList.reverse
+        userPostCount match {
+          case 0 =>
+          case _ =>
+            val lastPost = postsHistory.last
+            val lastTenPostsHistory = postsHistory.takeRight(10).map(x => x._4).toList.reverse
+            val map = topicsMap.toMap
 
-        val map = topicsMap.toMap
-        postHistory = topicHistoryIds.map(x =>
-          <div class="history">{ name } posted in <a class="jump_to_topic" title={ x.toString() } href="#">{ map(x); }</a></div>).asInstanceOf[Seq[Node]]
+            lastPostDate = lastPost._3.toString().split(" ")(0)
+            lastTenPosts = lastTenPostsHistory.map(x =>
+              <div class="history">{ username } posted in <a class="jump_to_topic" title={ x.toString() } href="#">{ map(x); }</a></div>).asInstanceOf[Seq[Node]]
+        }
 
     }
-
-    { (userEmail, userPostCount, lastPostDate, postHistory) }
+    (username, userEmail, userPostCount, lastPostDate, lastTenPosts)
   }
 
-  def set(db: Database, username: Any, content: Seq[Node]) = {
-    val databaseResults = databaseQueries(db, username)
+  def set(db: Database, userId: Int, form: Seq[Node]) = {
+    val res = databaseQueries(db, userId)
 
     <html lang="en">
       <head>
@@ -66,22 +68,22 @@ object ProfilePage {
           { Navigation.profileNavigation }
         </div>
         <div id="mainContainer">
-          <div class="subtitle"> { username } </div>
+          <div class="subtitle"> { res._1 } </div>
           <div id="profile-area">
             <div id="left-panel">
               <div id="stats-area">
                 <table id="user-stats-table">
                   <tr>
                     <td class="col-one">Email:</td>
-                    <td>{ databaseResults._1 }</td>
+                    <td>{ res._2 }</td>
                   </tr>
                   <tr>
                     <td class="col-one">Total Posts:</td>
-                    <td>{ databaseResults._2 }</td>
+                    <td>{ res._3 }</td>
                   </tr>
                   <tr>
                     <td class="col-one">Last Post:</td>
-                    <td>{ databaseResults._3 }</td>
+                    <td>{ res._4 }</td>
                   </tr>
                 </table>
               </div>
@@ -95,11 +97,8 @@ object ProfilePage {
               </div>
               <div id="post-history">
                 <h4>Recent Posts</h4>
-
-
-{content}
-
-                { databaseResults._4 }
+                { form }
+                { res._5 }
               </div>
             </div>
           </div>

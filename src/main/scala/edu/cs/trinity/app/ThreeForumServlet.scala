@@ -14,12 +14,10 @@ class User(tag: Tag) extends Table[(Int, String, String, String, Timestamp, Int)
   def username = column[String]("user_name")
   def userpass = column[String]("user_pass")
   def useremail = column[String]("user_email")
-  def userdate = column[Timestamp]("user_date") //try Option[Timestamp]
+  def userdate = column[Timestamp]("user_date")
   def userlevel = column[Int]("user_level")
 
   def * : ProvenShape[(Int, String, String, String, Timestamp, Int)] = (userid, username, userpass, useremail, userdate, userlevel)
-
-  //def * = (userid, username, userpass, useremail, userdate, userlevel)
 }
 
 case class User2(id: Int, name: String, pass: String, email: String, date: Timestamp, level: Int)
@@ -45,18 +43,15 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
   }
 
   get("/profile") {
-    //future todo: "/posts" should be whatever link hayden has. posts.php --> /posts?
-    //future todo: actually get the real session("username")
     session("username") = "hermajesty"
     val username = session("username")
-    val content = {
+    val form = {
       <form id="jumpToTopic" action={ url("/posts") } method="post">
         <input id="topic_id" type="hidden" style="display:none" value="x" name="topic_id"></input>
         <input id="page" type="hidden" style="display:none" value="1" name="page"></input>
       </form>
     }
-    
-    ProfilePage.set(db, username, content)
+    ProfilePage.set(db, 38, form) //3 --> session("user_id")
   }
 
   get("/session") {
