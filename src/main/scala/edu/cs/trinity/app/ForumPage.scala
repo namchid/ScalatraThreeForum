@@ -12,6 +12,7 @@ import scala.slick.jdbc.StaticQuery.interpolation
 
 import Tables._
 
+//not needed?
 object ForumPage {
 
   def set(userid: Int) = {
@@ -39,8 +40,8 @@ object ForumPage {
       implicit session =>
 
         try {
-          val idResult = users.filter(x => x.username === { username } && x.userpass === { password }).list
-          userID = idResult(0)._1
+          val idResult = users.filter(x => x.username === { username } && x.userPass === { password }).list
+          userID = idResult(0).userId
           return userID
 
         } catch {

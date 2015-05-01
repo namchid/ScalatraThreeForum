@@ -9,129 +9,76 @@ import scala.slick.lifted.{ ProvenShape, ForeignKeyQuery }
 import scala.slick.jdbc.GetResult
 import scala.slick.jdbc.StaticQuery.interpolation
 
-class User(tag: Tag) extends Table[(Int, String, String, String, Timestamp, Int)](tag, "users") {
-  def userid = column[Int]("user_id", O.PrimaryKey, O.AutoInc)
-  def username = column[String]("user_name")
-  def userpass = column[String]("user_pass")
-  def useremail = column[String]("user_email")
-  def userdate = column[Timestamp]("user_date")
-  def userlevel = column[Int]("user_level")
-
-  def * : ProvenShape[(Int, String, String, String, Timestamp, Int)] = (userid, username, userpass, useremail, userdate, userlevel)
-}
-
-case class User2(id: Int, name: String, pass: String, email: String, date: Timestamp, level: Int)
+import Tables._
 
 class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSupport {
-  val users = TableQuery[User]
 
-  implicit val getUser2 = GetResult(r => User2(r.<<, r.<<, r.<<, r.<<, r.<<, r.<<))
-
-  get("/newUser") {
-    println("new user page")
+  def checkUserLogin(username: String, password: String): Int = {
+    db.withSession {
+      implicit session =>
+        val filteredUsers = users.filter(x => x.username === username && x.userPass === password).list
+        if (filteredUsers.length < 1) redirect("/")
+        else return filteredUsers(0).userId
+    }
+    -1
   }
 
   get("/") {
-
-    var contents = {
-      <form name="loginform" method="post" action={ url("/forum") }>
-        <input type="text" id="username" name="username" placeholder="username" class="input-fields"/>
-        <input type="password" id="password" name="password" placeholder="password" class="input-fields"/>
-        <button id="submit-button">login</button>
-        <input type="hidden" id="hiddenfield" name="hiddenfield"/>
-      </form>
+    session.get("userId") match {
+      case None =>
+        LoginPage.set()
+      case _ =>
+        redirect("/forum")
     }
+  }
 
-    val formSelectorContents = {
-      <ul id="form-selector">
-        <li>
-          <form action={url("/")}>
-            <button  type="submit" id="login" >Log in</button>
-          </form>
-        </li>
-        <li>
-          <form action={url("/newUser")}>
-            <button type="submit" id="new-user" >New User</button>
-          </form>
-        </li>
-      </ul>
-    }
-    Login.set(contents, formSelectorContents);
-
+  get("/newUserPage") {
+    LoginPage.set(2)
   }
 
   get("/about") {
     AboutPage.get()
   }
 
-  post("/forum") {
-
-    session("username") = params("username")
-    session("password") = params("password")
-    var userID = ForumPage.checkUser(session("username").toString(), session("password").toString(), db)
-    if (userID <= 0)
-      redirect("/")
-    else {
-      session("userid") = userID
-      ForumPage.set(userID)
-    }
-
-  }
-
-  get("/login") {
-
-  }
-
   get("/profile") {
-    session("username") = "hermajesty"
+    if (session.get("userId") == None) redirect("/")
+    
     val username = session("username")
     val form = {
-      <form id="jumpToTopic" action={ url("/posts") } method="post">
+      <form id="jumpToTopic" action="/posts" method="post">
         <input id="topic_id" type="hidden" style="display:none" value="x" name="topic_id"></input>
         <input id="page" type="hidden" style="display:none" value="1" name="page"></input>
       </form>
     }
-    ProfilePage.set(db, 38, form) //3 --> session("user_id")
+    ProfilePage.set(db, { session("userId").asInstanceOf[Int] }, form)
   }
 
-  get("/session") {
-    if (session.get("name").isEmpty) {
-      session("name") = "Bob"
-      <p>I don't know you. Let's call you Bob.</p>
-    } else {
-      val name = session("name")
-      session.remove("name")
-      <p>Welcome back { name }. I will forget you now.</p>
+  post("/loadNewUserForm") {
+    redirect("/newUserPage")
+  }
+
+  post("/loadLoginForm") {
+    redirect("/")
+  }
+
+  post("/checkLogin") {
+    (params.get("username"), params.get("password")) match {
+      case (None, None) =>
+        redirect("/")
+      case _ =>
+        session("userId") = checkUserLogin(params("username"), params("password"))
+        session("username") = params("username")
+        redirect("/forum")
     }
   }
 
-  get("/db") {
-    println("no")
-    db.withSession {
-      implicit session =>
-        println(users.selectStatement)
-        val sel = sql"SELECT * FROM users"
-        println(sel.as[User2].list)
-        println(users.list)
-      //        val ts = new java.sql.Timestamp(new java.util.Date().getTime)
-      //        users += (100, "Bobby", "fischer", "bfish@fish.com", ts, 1)
-      // val usernames = for { u <- users } yield u.username
-
-      //(users.ddl).create
-
-      //        val usernames = users.map(_.username)
-      //        println(usernames)
-    }
-
-    // Int, String, String, String, Timestamp, Int
-    //implicit val getUsersResult = 
-    //  GetResult(u => User(u.nextInt, u.nextString, u.nextString, u.nextString, u.nextTimestamp, u.nextInt))
-
+  get("/forum") {
+    if (session.get("userId") == None) redirect("/")
     <html>
       <body>
-        <h1>You should see a database.</h1>
+        Here in Forum.
+				Your userID:{ session("userId") }
       </body>
     </html>
   }
-
 }

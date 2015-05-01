@@ -21,22 +21,22 @@ object ProfilePage {
 
     db.withSession {
       implicit session =>
-        val filteredUsers = (users.filter(x => x.userid === userId).list)
+        val filteredUsers = (users.filter(x => x.userId === userId).list)
         val correctUser = filteredUsers(0)
         val postsHistory = posts.filter(x => x.userId === userId).list
 
-        username = correctUser._2
-        userEmail = correctUser._4
+        username = correctUser.username
+        userEmail = correctUser.userEmail
         userPostCount = postsHistory.size
 
         userPostCount match {
           case 0 =>
           case _ =>
             val lastPost = postsHistory.last
-            val lastTenPostsHistory = postsHistory.takeRight(10).map(x => x._4).toList.reverse
+            val lastTenPostsHistory = postsHistory.takeRight(10).map(x => x.topicId).toList.reverse
             val map = topicsMap.toMap
 
-            lastPostDate = lastPost._3.toString().split(" ")(0)
+            lastPostDate = lastPost.postDate.toString().split(" ")(0)
             lastTenPosts = lastTenPostsHistory.map(x =>
               <div class="history">{ username } posted in <a class="jump_to_topic" title={ x.toString() } href="#">{ map(x); }</a></div>).asInstanceOf[Seq[Node]]
         }
