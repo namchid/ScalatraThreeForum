@@ -28,7 +28,7 @@ $(function() {
 		
 
 	//display login form
-	loadLoginForm();
+	// loadLoginForm();
 
 //////////
 	
