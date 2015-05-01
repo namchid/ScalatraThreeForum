@@ -35,9 +35,9 @@ object Navigation {
           </ul>
         </li>
         <li class='active'>
-          <a href='#todo_forums'><span>Forum</span></a>
+          <a href='#todo_forums'><span class='current'>Forum</span></a>
         </li>
-        <li class='last'><a href='/about'><span class='current'>About ThreeForum</span></a></li>
+        <li class='last'><a href='/about'>About ThreeForum</a></li>
       </ul>
     </div>
   }

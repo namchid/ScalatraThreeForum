@@ -42,7 +42,7 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
 
   get("/profile") {
     if (session.get("userId") == None) redirect("/")
-    
+
     val username = session("username")
     val form = {
       <form id="jumpToTopic" action="/posts" method="post">
@@ -74,10 +74,22 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
 
   get("/forum") {
     if (session.get("userId") == None) redirect("/")
+    println("\nyou are in forum\n" + { session("userId") })
+
+    ForumPage.set(db)
+  }
+
+  get("/logout") {
+    session.invalidate
+  }
+
+  post("/category") {
     <html>
       <body>
-        Here in Forum.
-				Your userID:{ session("userId") }
+        This is actually Hayden's page
+        <br/>
+        Parameters:
+        { params }
       </body>
     </html>
   }

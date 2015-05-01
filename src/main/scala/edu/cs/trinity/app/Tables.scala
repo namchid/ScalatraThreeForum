@@ -6,32 +6,39 @@ import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.GetResult
 import scala.slick.lifted.{ ProvenShape, ForeignKeyQuery }
 
-case class TopicCaseClass (
+case class TopicCaseClass(
   topicId: Int,
   topicSubject: String,
   topicDate: Timestamp,
   catId: Int,
-  userId: Int
-)
+  userId: Int)
 
-case class PostCaseClass (
+case class PostCaseClass(
   postId: Int,
   postContent: String,
   postDate: Timestamp,
   topicId: Int,
-  userId: Int
-)
+  userId: Int)
 
-case class UserCaseClass (
+case class UserCaseClass(
   userId: Int,
   username: String,
   userPass: String,
   userEmail: String,
   userDate: Timestamp,
-  userLevel: Int
-)
+  userLevel: Int)
 
-// (Int, String, Timestamp, Int, Int)
+case class BoardCaseClass(
+  boardId: Int,
+  boardName: String,
+  boardDescription: String)
+
+case class CategoryCaseClass(
+  catId: Int,
+  catName: String,
+  catDescription: String,
+  boardId: Int)
+
 class Post(tag: Tag) extends Table[PostCaseClass](tag, "posts") {
   def postId = column[Int]("post_id", O.PrimaryKey, O.AutoInc)
   def postContent = column[String]("post_content")
@@ -49,7 +56,7 @@ class Topic(tag: Tag) extends Table[TopicCaseClass](tag, "topics") {
   def catId = column[Int]("cat_id")
   def userId = column[Int]("user_id")
 
-  def * = (topicId, topicSubject, topicDate, catId, userId) <> ((TopicCaseClass.apply _).tupled, (TopicCaseClass).unapply) 
+  def * = (topicId, topicSubject, topicDate, catId, userId) <> ((TopicCaseClass.apply _).tupled, (TopicCaseClass).unapply)
 }
 
 class User(tag: Tag) extends Table[UserCaseClass](tag, "users") {
@@ -63,14 +70,30 @@ class User(tag: Tag) extends Table[UserCaseClass](tag, "users") {
   def * = (userId, username, userPass, userEmail, userDate, userLevel) <> ((UserCaseClass.apply _).tupled, (UserCaseClass).unapply)
 }
 
-//case class User2(id: Int, name: String, pass: String, email: String, date: Timestamp, level: Int)
+class Board(tag: Tag) extends Table[BoardCaseClass](tag, "boards") {
+  def boardId = column[Int]("board_id", O.PrimaryKey, O.AutoInc)
+  def boardName = column[String]("board_name")
+  def boardDescription = column[String]("board_description")
 
+  def * = (boardId, boardName, boardDescription) <> ((BoardCaseClass.apply _).tupled, (BoardCaseClass).unapply)
+}
+
+class Category(tag: Tag) extends Table[CategoryCaseClass](tag, "categories") {
+  def catId = column[Int]("cat_id", O.PrimaryKey, O.AutoInc)
+  def catName = column[String]("cat_name")
+  def catDescription = column[String]("cat_description")
+  def boardId = column[Int]("board_id")
+
+  def * = (catId, catName, catDescription, boardId) <> ((CategoryCaseClass.apply _).tupled, (CategoryCaseClass).unapply)
+}
 
 object Tables {
   val users = TableQuery[User]
   val posts = TableQuery[Post]
   val topics = TableQuery[Topic]
-  val topicsMap = topics.map(t => (t.topicId -> t.topicSubject)) 
-  
-  //implicit val getUser2 = GetResult(r => User2(r.<<, r.<<, r.<<, r.<<, r.<<, r.<<))
+  val boards = TableQuery[Board]
+  val categories = TableQuery[Category]
+
+  val topicsMap = topics.map(t => (t.topicId -> t.topicSubject))
+
 }

@@ -45,9 +45,6 @@ object LoginPage {
         <link href='http://fonts.googleapis.com/css?family=Cutive+Mono' rel='stylesheet' type='text/css'/>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
         <script src="js/matrix.js" type="text/javascript"></script>
-        <!--	<script type="text/javascript" src="resources/scripts/loadForm.js"></script>
-				<script type="text/javascript" src="resources/scripts/loginForum.js"></script>
-				<script type="text/javascript" src="resources/scripts/newUser.js"></script> -->
       </head>
       <body>
         <div id="php-insert"></div>
