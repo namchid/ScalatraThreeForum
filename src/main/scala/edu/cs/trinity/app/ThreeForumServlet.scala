@@ -124,14 +124,4 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
     redirect("/")
   }
 
-  post("/category") {
-    <html>
-      <body>
-        This is actually Hayden's page
-        <br/>
-        Parameters:
-        { params }
-      </body>
-    </html>
-  }
 }
