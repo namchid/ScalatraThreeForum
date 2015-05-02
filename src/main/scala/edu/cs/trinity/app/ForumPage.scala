@@ -68,14 +68,6 @@ object ForumPage {
     db.withSession {
       implicit session =>
         val ret = boards.list.map(b => formatBoard(b.boardName) ++: getFormattedCategories(db, b.boardId, b.boardName)).asInstanceOf[Seq[Node]]
-        println(ret)
-
-        val temp = {
-          <h2>technology</h2>
-          <h2>stuff</h2>
-        }
-        //temp
-
         ret
     }
   }

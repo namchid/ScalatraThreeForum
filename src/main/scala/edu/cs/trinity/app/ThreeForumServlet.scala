@@ -72,6 +72,35 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
     }
   }
 
+  post("/createNewUser") {
+    val email = params("email")
+    val username = params("username")
+    val password = params("password1")
+    val password2 = params("password2")
+
+    if (email == "" || username == "" || password == "" || password2 == "" || (password != password2))
+      redirect("/formErrors")
+    else {
+      val newUserCreated = LoginPage.createNewUser(db, email, username, password)
+      if (newUserCreated > -1) {
+        println("true")
+        session("userId") = newUserCreated
+        session("username") = username
+        redirect("/forum")
+      } else {
+        redirect("/formErrors")
+      }
+    }
+  }
+
+  get("/formErrors") {
+    LoginPage.setWithError()
+  }
+
+  get("/createNewUser") {
+    redirect("/newUserPage")
+  }
+
   get("/forum") {
     if (session.get("userId") == None) redirect("/")
     println("\nyou are in forum\n" + { session("userId") })
@@ -81,6 +110,7 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
 
   get("/logout") {
     session.invalidate
+    redirect("/")
   }
 
   post("/category") {
