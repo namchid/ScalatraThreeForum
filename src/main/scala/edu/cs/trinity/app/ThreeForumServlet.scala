@@ -32,6 +32,17 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
     }
   }
 
+  get("/posts"){
+      Posts.SetPassed(params, db, session("user_id")) 
+  }
+  post("/AddPost"){
+    val content = request.body
+    Posts.Add(params,db, session("user_id"))
+  }
+  
+  get("/categories"){
+    Categories.GoCategories(params, db, session("user_id"))
+  }
   get("/newUserPage") {
     LoginPage.set(2)
   }
