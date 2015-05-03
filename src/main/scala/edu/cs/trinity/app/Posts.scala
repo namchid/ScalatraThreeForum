@@ -17,10 +17,12 @@ import Tables._
 object Posts {
  // val passed
   
+  /*
     implicit val getUser2 = GetResult(r => User2(r.<<, r.<<, r.<<, r.<<, r.<<, r.<<))
     implicit val getBoard2 = GetResult(r => Board2(r.<<, r.<<, r.<<))
     implicit val getCat2 = GetResult(r => Cat2(r.<<, r.<<, r.<<, r.<<))
-
+*/
+  
  //   implicit val getPost2 = GetResult(r => Post2(r.<<, r.<<, r.<<, r.<<, r.<<))
 
   def get(){
@@ -41,7 +43,7 @@ object Posts {
      
     db.withSession{
       implicit session =>
-        posts.+= ((-99, content,timeStamp, topicID, userID ))
+        posts.+= (PostCaseClass(-99, content,timeStamp, topicID, userID ))
     }
   
      
@@ -115,14 +117,14 @@ object Posts {
 			  var userRes:List[edu.cs.trinity.app.User#TableElementType] = null.asInstanceOf[List[edu.cs.trinity.app.User#TableElementType]]
         db.withSession {
           implicit session =>
-             userRes = users.filter(x => x.userid === { P._5 }).list
+             userRes = users.filter(x => x.userId === { P.userId }).list
         }
          // println(x.toString)
         nodeSeq = nodeSeq ++		     {
           <tr>
 			 <td class="message-body"> 
 				 <div class = "row1">
-					{stringtoxml(P._2)}
+					{stringtoxml(P.postContent)}
          </div>
 			 </td>
 			 <td class="post-num"><div class="row1">#{postCount + ((page - 1) * postsPerPage)}</div></td>
@@ -130,9 +132,9 @@ object Posts {
 		 <tr>
      { postCount += 1 }
 			 <td colspan="2" class="edit-post">
-         <span class="username-field" title ={ "" + P._5 +"" }>{userRes.head._2}</span>
-               {if(userID == P._5)
-                   <span class="edit" data-post_id ={""+P._1 +""} onclick="updatePostLabel()">edit post</span> 
+         <span class="username-field" title ={ "" + P.userId +"" }>{userRes.head.username}</span>
+               {if(userID == P.userId)
+                   <span class="edit" data-post_id ={""+P.postId +""} onclick="updatePostLabel()">edit post</span> 
                 else
                     <span class="" onclick=""> </span>} 
        </td>

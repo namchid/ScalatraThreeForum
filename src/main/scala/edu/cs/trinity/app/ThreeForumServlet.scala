@@ -33,16 +33,27 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
   }
 
   get("/posts"){
-      Posts.SetPassed(params, db, session("user_id")) 
+      Posts.SetPassed(params, db, session("userId")) 
   }
   post("/AddPost"){
     val content = request.body
-    Posts.Add(params,db, session("user_id"))
+    Posts.Add(params,db, session("userId"))
   }
   
   get("/categories"){
-    Categories.GoCategories(params, db, session("user_id"))
+    Categories.GoCategories(params, db, session("userId"))
   }
+  post("/category"){
+  
+    val content = request.body
+    <div> redirect not working? Above</div>
+    var url = "/categories?cat_id="
+    url += params.get("cat_id").get
+    redirect(url)
+//    redirect("/categories?cat_id="+params.get("cat_id"))
+    <div> redirect not working? Below</div> 
+  }
+  
   get("/newUserPage") {
     LoginPage.set(2)
   }

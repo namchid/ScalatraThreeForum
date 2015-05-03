@@ -15,10 +15,11 @@ import Tables._
 
 object Categories {
 
+  /*
     implicit val getUser2 = GetResult(r => User2(r.<<, r.<<, r.<<, r.<<, r.<<, r.<<))
     implicit val getBoard2 = GetResult(r => Board2(r.<<, r.<<, r.<<))
     implicit val getCat2 = GetResult(r => Cat2(r.<<, r.<<, r.<<, r.<<))
-  
+  */
   
   def GoCategories(params:org.scalatra.Params, db:Database, user_id:Any)={
     
@@ -34,7 +35,7 @@ object Categories {
            var slickJoin =  for {
              c <- categories if c.catId === cat_id
 //            } yield LiteralColumn ("") ++ c.catId ++ "~*~" ++ c.catName ++ "~*~" ++ c.catDesc ++ "~*~" ++ c.boardId
-           } yield LiteralColumn ("") ++ c.catId.asColumnOf[String] ++ "~x~" ++ c.catName ++ "~x~" ++ c.catDesc ++ "~x~" ++ c.boardId.asColumnOf[String]
+           } yield LiteralColumn ("") ++ c.catId.asColumnOf[String] ++ "~x~" ++ c.catName ++ "~x~" ++ c.catDescription ++ "~x~" ++ c.boardId.asColumnOf[String]
            // } yield( "" + c.catId.asColumnOf[Int] + "~x~" + c.catName.asColumnOf[String] + "~x~" + c.catDesc.asColumnOf[String] + "~x~" + c.boardId.asColumnOf[Int])
             // FUCK slick. NOTHING about it is even remotely fucking usable . 
             slickJoin.foreach{e =>
@@ -71,11 +72,11 @@ object Categories {
 								  }
 								  var userRes =   db.withSession{
                     implicit session =>
-                      users.filter(x => x.userid === {postRes.last._5 }).list
+                      users.filter(x => x.userId === {postRes.last.userId }).list
                     }
 								  <td class="topic-replies">{""+postRes.length+""}</td> 
                   <td class="topic-views">TO-DO</td>
-                  <td class="topic-last">{""+userRes.last._2+""}</td>
+                  <td class="topic-last">{""+userRes.last.username+""}</td>
                   
 								}
 							</tr> 
