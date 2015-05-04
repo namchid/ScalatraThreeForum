@@ -32,33 +32,43 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
     }
   }
 
-  get("/posts"){
-      Posts.SetPassed(params, db, session("userId")) 
+  get("/posts") {
+    if (session.get("userId") == None) redirect("/")
+    Posts.SetPassed(params, db, session("userId"))
   }
-  post("/AddPost"){
+
+  post("/AddPost") {
+    if (session.get("userId") == None) redirect("/")
     val content = request.body
-    Posts.Add(params,db, session("userId"))
+    Posts.Add(params, db, session("userId"))
+
+    //println("Your params: " + params)
+    redirect("/posts?topic_id=" + params.get("topic_id_post").get + "&page=" + params("page_post"))
+    //Posts.SetPassed(params, db, session("userId"))
   }
-  
-  get("/categories"){
+
+  get("/categories") {
+    if (session.get("userId") == None) redirect("/")
     Categories.GoCategories(params, db, session("userId"))
   }
-  post("/category"){
-  
+  post("/category") {
+    if (session.get("userId") == None) redirect("/")
     val content = request.body
     <div> redirect not working? Above</div>
     var url = "/categories?cat_id="
     url += params.get("cat_id").get
     redirect(url)
-//    redirect("/categories?cat_id="+params.get("cat_id"))
-    <div> redirect not working? Below</div> 
+    //    redirect("/categories?cat_id="+params.get("cat_id"))
+    <div> redirect not working? Below</div>
   }
-  
+
   get("/newUserPage") {
+    if (session.get("userId") == None) redirect("/")
     LoginPage.set(2)
   }
 
   get("/about") {
+    if (session.get("userId") == None) redirect("/")
     AboutPage.get()
   }
 
@@ -67,12 +77,18 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
 
     val username = session("username")
     val form = {
-      <form id="jumpToTopic" action="/posts" method="post">
+      <form id="jumpToTopic" action="/hackPosts" method="post">
         <input id="topic_id" type="hidden" style="display:none" value="x" name="topic_id"></input>
         <input id="page" type="hidden" style="display:none" value="1" name="page"></input>
       </form>
     }
     ProfilePage.set(db, { session("userId").asInstanceOf[Int] }, form)
+  }
+
+  post("/hackPosts") {
+    val topicId = params("topic_id")
+
+    redirect("/posts?topic_id=" + { topicId })
   }
 
   post("/loadNewUserForm") {
@@ -105,7 +121,7 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
     else {
       val newUserCreated = LoginPage.createNewUser(db, email, username, password)
       if (newUserCreated > -1) {
-        println("true")
+        //println("true")
         session("userId") = newUserCreated
         session("username") = username
         redirect("/forum")
@@ -125,7 +141,7 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
 
   get("/forum") {
     if (session.get("userId") == None) redirect("/")
-    println("\nyou are in forum\n" + { session("userId") })
+    //println("\nyou are in forum\n" + { session("userId") })
 
     ForumPage.set(db)
   }

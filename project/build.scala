@@ -19,7 +19,7 @@ object ThreeforumBuild extends Build {
     "threeforum",
     file("."),
     settings = ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
-      port in container.Configuration := 9086,
+      port in container.Configuration := 8088,
       organization := Organization,
       name := Name,
       version := Version,
