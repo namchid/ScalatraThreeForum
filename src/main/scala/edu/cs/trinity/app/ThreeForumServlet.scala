@@ -63,7 +63,7 @@ class ThreeForumServlet(db: Database) extends ThreeforumStack with SessionSuppor
   }
 
   get("/newUserPage") {
-    if (session.get("userId") == None) redirect("/")
+   // if (session.get("userId") == None) redirect("/")
     LoginPage.set(2)
   }
 
